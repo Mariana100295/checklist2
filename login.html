@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+ <title>Mi Todo App con Supabase</title>
+  <style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #2d2d31;
+    color: #111827;
+    padding: 2rem;
+    max-width: 500px;
+    margin: auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: #2563eb;
+  }
+
+  form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  input[type="email"],
+  input[type="password"],
+  input[type="text"] {
+    flex: 1;
+    padding: 0.6rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+  }
+
+  button {
+    padding: 0.6rem 1rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  button:hover {
+    background-color: #1d4ed8;
+  }
+
+.Estilo1 {color: #FFFFFF}
+  .Estilo2 {color: #00FFFF}
+  .Estilo3 {font-size: 16px}
+  </style>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
+<body>
+
+  <h2 align="center" class="Estilo2">Iniciar Sesion</h2>
+  <p align="center" class="Estilo1">Correo</p>
+  <p align="center"> <input type="email" id="correo" placeholder="Correo electr?nico" required>
+  </p> 
+  <p align="center" class="Estilo1">Contrase&ntilde;a</p><p align="center" class="Estilo3">
+    <input name="password" type="password" class="Estilo2" id="contrase?a" placeholder="Contrase?a" required>
+  </p>
+  
+  
+<div align="center">
+      <button onClick="login()">    Ingresar</button>
+</div>
+    <p id="login-error"></p>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const supabaseUrl = 'https://lqdzjwvitlycrgjggyyl.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxZHpqd3ZpdGx5Y3JnamdneXlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMjg1NzcsImV4cCI6MjA2MTgwNDU3N30.C8Wu_vIyUX2Uay9YU38RDNp4PYAS1CSVCFZ9XgVX7jU'; // reemplaza con tu anon key real
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    window.login = async function () {
+      const email = document.getElementById("correo").value.trim();
+      const password = document.getElementById("contrase?a").value;
+      const errorEl = document.getElementById("login-error");
+      errorEl.textContent = "";
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        errorEl.textContent = "Error al iniciar sesi?n: " + error.message;
+        return;
+      }
+
+      // Redirige si login fue exitoso
+      window.location.href = "checklist.html";
+    };
+  </script>
+  <span class="Estilo1"></span>
+
+</body>
+</html>
